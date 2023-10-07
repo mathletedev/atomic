@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		@apply latte dark:mocha;
+		@apply bg-mantle;
+		@apply text-text;
+	}
+
+	* {
+		@apply transition-colors duration-500;
+	}
+
+	.icon-button {
+		@apply px-1;
+		@apply text-text;
+		@apply rounded-full;
+	}
+}
