@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"outDir": "dist",
+		"removeComments": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "es2022",
+		"types": ["bun-types"]
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules"]
+}
