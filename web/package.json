@@ -1,5 +1,5 @@
 {
-  "name": "atomic-web",
+  "name": "@atomic/web",
   "version": "0.0.1",
   "private": true,
   "scripts": {

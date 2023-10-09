@@ -1,5 +1,5 @@
 {
-  "name": "atomic-mobile",
+  "name": "@atomic/mobile",
   "main": "app/app.ts",
   "version": "1.0.0",
   "private": true,
