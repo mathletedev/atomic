@@ -1,32 +1,36 @@
 {
-	"name": "@atomic/server",
-	"private": true,
-	"scripts": {
-		"dev": "nodemon -w src --exec bun src/index.ts"
-	},
-	"dependencies": {
-		"@trpc/server": "^10.37.1",
-		"@types/pg": "^8.10.2",
-		"cors": "^2.8.5",
-		"express": "^4.18.2",
-		"pg": "^8.11.2",
-		"pino": "^8.15.0",
-		"pino-pretty": "^10.2.0",
-		"trpc-playground": "^1.0.4",
-		"zod": "^3.21.4"
-	},
-	"devDependencies": {
-		"@types/cors": "^2.8.13",
-		"@types/express": "^4.17.17",
-		"@typescript-eslint/eslint-plugin": "^6.3.0",
-		"@typescript-eslint/parser": "^6.3.0",
-		"bun-types": "^0.7.3",
-		"eslint": "^8.47.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-simple-import-sort": "^10.0.0",
-		"nodemon": "^3.0.1",
-		"prettier": "^3.0.1",
-		"typescript": "^5.1.6"
-	},
-	"type": "module"
+  "name": "@atomic/server",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon -w src --exec bun src/index.ts"
+  },
+  "dependencies": {
+    "@trpc/server": "^10.37.1",
+    "@types/pg": "^8.10.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "pg": "^8.11.2",
+    "pino": "^8.15.0",
+    "pino-pretty": "^10.2.0",
+    "trpc-playground": "^1.0.4",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.4",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.8",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "bun-types": "^0.7.3",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.1",
+    "typescript": "^5.1.6"
+  },
+  "type": "module"
 }
