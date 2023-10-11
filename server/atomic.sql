@@ -1,5 +1,6 @@
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
 	email TEXT UNIQUE NOT NULL,
-	password TEXT NOT NULL
+	password TEXT NOT NULL,
+	dark_mode BOOLEAN DEFAULT FALSE
 );

@@ -1,33 +1,15 @@
 <script lang="ts">
 	import { Home, Icon, Moon, Sun } from "svelte-hero-icons";
 
-	import { browser } from "$app/environment";
 	import { trpc } from "$lib/trpc";
 
-	const applyTheme = () => {
-		if (darkMode) document.querySelector("html")!.classList.add("dark");
-		else document.querySelector("html")!.classList.remove("dark");
-	};
+	export let darkMode: boolean;
 
-	let darkMode = false;
+	const toggleDarkMode = async () => {
+		darkMode = await trpc.user.toggleDarkMode.mutate();
 
-	if (browser) {
-		darkMode =
-			localStorage.theme === "dark" ||
-			(!("theme" in localStorage) &&
-				window.matchMedia("(prefers-color-scheme: dark)").matches);
-		applyTheme();
-	}
-
-	const home = () => {
-		window.location.assign("/");
-	};
-
-	const toggleDarkMode = () => {
-		darkMode = !darkMode;
-		applyTheme();
-
-		localStorage.setItem("theme", darkMode ? "dark" : "light");
+		if (darkMode) document.documentElement.classList.add("dark");
+		else document.documentElement.classList.remove("dark");
 	};
 
 	const signIn = async () => {
@@ -36,7 +18,10 @@
 </script>
 
 <nav class="px-8 py-2 flex gap-x-2 bg-base">
-	<button class="icon-button hover:text-blue" on:click={home}>
+	<button
+		class="icon-button hover:text-blue"
+		on:click={() => window.location.assign("/home")}
+	>
 		<Icon src={Home} solid class="w-6" />
 	</button>
 	<div class="grow"></div>

@@ -4,6 +4,9 @@
 	import { trpc } from "$lib/trpc";
 
 	import Navbar from "../../components/Navbar.svelte";
+	import type { PageData } from "../$types";
+
+	export let data: PageData;
 
 	let hello = "";
 
@@ -12,7 +15,7 @@
 	};
 </script>
 
-<Navbar />
+<Navbar darkMode={data.darkMode} />
 <div class="px-16 py-4">
 	<h1 class="text-xl font-bold text-mauve">My Atoms</h1>
 	<p>{hello}</p>

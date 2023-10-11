@@ -6,7 +6,7 @@ import session from "express-session";
 type Session = session.Session &
 	Partial<session.SessionData> & { userId?: string };
 
-type ExpressRequest = Omit<CreateExpressContextOptions, "req"> & {
+export type ExpressRequest = Omit<CreateExpressContextOptions, "req"> & {
 	req: Request & { session: Session };
 };
 
