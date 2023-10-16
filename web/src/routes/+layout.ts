@@ -1,17 +1,18 @@
 import { trpc } from "$lib/trpc";
+import type { User } from "$lib/types";
 
 import type { LayoutLoad } from "./$types";
 
 export const load: LayoutLoad = async () => {
-	let darkMode;
+	let user: User | undefined;
 
 	try {
-		darkMode = await trpc.user.darkMode.query();
+		user = await trpc.user.me.query();
 	} catch (err) {
-		darkMode = false;
+		user = undefined;
 	}
 
 	return {
-		darkMode
+		user
 	};
 };

@@ -8,7 +8,7 @@
 	export let data: LayoutData;
 
 	onMount(() => {
-		if (data.darkMode) document.documentElement.classList.add("dark");
+		if (data.user?.dark_mode) document.documentElement.classList.add("dark");
 		else document.documentElement.classList.remove("dark");
 	});
 </script>

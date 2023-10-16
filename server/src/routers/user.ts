@@ -72,10 +72,6 @@ export const userRouter = router({
 			})
 		);
 	}),
-	darkMode: procedure.query(async ({ ctx }) => {
-		const user = await getUser(ctx);
-		return user.dark_mode;
-	}),
 	toggleDarkMode: procedure.mutation(async ({ ctx }) => {
 		const user = await getUser(ctx);
 

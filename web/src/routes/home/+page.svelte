@@ -15,7 +15,7 @@
 	};
 </script>
 
-<Navbar darkMode={data.darkMode} />
+<Navbar user={data.user} />
 <div class="px-16 py-4">
 	<h1 class="text-xl font-bold text-mauve">My Atoms</h1>
 	<p>{hello}</p>

@@ -3,14 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+	* {
+		@apply transition-colors duration-500;
+	}
+
 	body {
 		@apply latte dark:mocha;
 		@apply bg-mantle;
 		@apply text-text;
 	}
 
-	* {
-		@apply transition-colors duration-500;
+	input {
+		@apply p-2 bg-base rounded border-l-2 border-sky invalid:border-maroon placeholder-subtext0;
 	}
 
 	.icon-button {
