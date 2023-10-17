@@ -4,3 +4,10 @@ CREATE TABLE users (
 	password TEXT NOT NULL,
 	dark_mode BOOLEAN DEFAULT FALSE
 );
+
+CREATE TABLE atoms (
+	id SERIAL PRIMARY KEY,
+	user_id INT NOT NULL,
+	title TEXT NOT NULL,
+	time INTERVAL NOT NULL
+)

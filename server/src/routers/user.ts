@@ -18,7 +18,7 @@ export const userRouter = router({
 			})
 		)
 		.mutation(async ({ input }) => {
-			const res = await db.query("SELECT * FROM USERS WHERE email = $1;", [
+			const res = await db.query("SELECT id FROM users WHERE email = $1;", [
 				input.email
 			]);
 
@@ -38,7 +38,7 @@ export const userRouter = router({
 		.input(z.object({ email: z.string(), password: z.string() }))
 		.query(async ({ input, ctx }) => {
 			const res = await db.query(
-				"SELECT id, password FROM USERS WHERE email = $1;",
+				"SELECT id, password FROM users WHERE email = $1;",
 				[input.email]
 			);
 

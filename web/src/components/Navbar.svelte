@@ -24,8 +24,8 @@
 
 <nav class="px-8 py-2 flex items-center gap-x-2 bg-base">
 	{#if user}
-		<a class="icon-button hover:text-blue" href="/home">
-			<Icon src={Home} solid class="w-6" />
+		<a class="icon-button hover:text-sapphire" href="/home">
+			<Icon class="w-6" src={Home} solid />
 		</a>
 	{/if}
 	<a class="text-2xl font-bold" href="/">
@@ -34,7 +34,7 @@
 	<div class="grow"></div>
 	{#if user}
 		<button class="icon-button hover:text-yellow" on:click={toggleDarkMode}>
-			<Icon src={darkMode ? Moon : Sun} solid class="w-6" />
+			<Icon class="w-6" src={darkMode ? Moon : Sun} solid />
 		</button>
 		<button
 			class="px-2 py-1 bg-surface0 hover:bg-surface1 rounded"
