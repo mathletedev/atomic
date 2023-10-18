@@ -1,20 +1,69 @@
 <script lang="ts">
 	import { getContext } from "svelte";
-	import { Icon, Trash } from "svelte-hero-icons";
+	import { Icon, Pause, Play, Trash } from "svelte-hero-icons";
 
+	import { trpc } from "$lib/trpc";
 	import type { Atom } from "$lib/types";
 
 	export let atom: Atom;
 
+	let time = atom.time_current;
+	let running = false;
+	let clock: number;
+
+	const pad = (x: number) => String(x).padStart(2, "0");
+
+	const complete = () => {
+		new Notification(`⚛ ${atom.title} complete! ⚛`);
+
+		stop();
+	};
+
+	const start = () => {
+		clock = setInterval(() => {
+			--time;
+
+			if (time === 0) complete();
+		}, 1000);
+
+		running = true;
+	};
+
+	const stop = async () => {
+		clearInterval(clock);
+
+		await trpc.atom.updateTime.mutate({ id: atom.id, time });
+
+		running = false;
+	};
+
+	// @ts-expect-error: no type inference
 	const { deleteAtom } = getContext("atom");
 </script>
 
-<div class="p-2 flex gap-2 rounded border-l-2 border-overlay0">
+<div
+	class={`p-2 flex gap-2 bg-base rounded border-l-2 ${
+		time === 0 ? "border-green" : "border-overlay0"
+	}`}
+>
 	<p>{atom.title}</p>
 	<div class="grow"></div>
-	<p>{atom.time}</p>
+	<p>
+		{Math.floor(time / 3600)}:{pad(Math.floor(time / 60) % 60)}:{pad(time % 60)}
+	</p>
 	<button
-		class="icon-button text-surface0 hover:text-surface1"
+		on:click={() => {
+			running ? stop() : start();
+		}}
+	>
+		<Icon
+			class="w-6 h-6 p-1 rounded-full bg-surface0 hover:text-green"
+			src={running ? Pause : Play}
+			solid
+		/>
+	</button>
+	<button
+		class="icon-button text-surface0 hover:text-maroon"
 		on:click={() => {
 			deleteAtom(atom.id);
 		}}

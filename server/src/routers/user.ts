@@ -27,6 +27,11 @@ export const userRouter = router({
 					code: "CONFLICT"
 				});
 
+			if (!input.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/))
+				throw new TRPCError({
+					code: "BAD_REQUEST"
+				});
+
 			const hash = await Bun.password.hash(input.password);
 
 			await db.query("INSERT INTO users (email, password) VALUES ($1, $2);", [
