@@ -9,7 +9,7 @@
 
 	let time = atom.time_current;
 	let running = false;
-	let clock: number;
+	let clock: ReturnType<typeof setTimeout>;
 
 	const pad = (x: number) => String(x).padStart(2, "0");
 
@@ -43,21 +43,24 @@
 
 <div
 	class={`p-2 flex gap-2 bg-base rounded border-l-2 ${
-		time === 0 ? "border-green" : "border-overlay0"
+		running ? "border-green" : "border-overlay0"
 	}`}
 >
-	<p>{atom.title}</p>
+	<p class={time === 0 ? "text-overlay0 line-through" : ""}>{atom.title}</p>
 	<div class="grow"></div>
-	<p>
+	<p class={time === 0 ? "text-overlay0" : ""}>
 		{Math.floor(time / 3600)}:{pad(Math.floor(time / 60) % 60)}:{pad(time % 60)}
 	</p>
 	<button
+		disabled={time === 0}
 		on:click={() => {
 			running ? stop() : start();
 		}}
 	>
 		<Icon
-			class="w-6 h-6 p-1 rounded-full bg-surface0 hover:text-green"
+			class={`w-6 h-6 p-1 rounded-full bg-surface0 ${
+				time === 0 ? "text-surface2" : "hover:text-green"
+			}`}
 			src={running ? Pause : Play}
 			solid
 		/>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, setContext } from "svelte";
-	import { Icon, PaperAirplane, Plus } from "svelte-hero-icons";
+	import { Backspace, Icon, PaperAirplane, Plus } from "svelte-hero-icons";
 
 	import { trpc } from "$lib/trpc";
 	import type { Atom as AtomModel } from "$lib/types";
@@ -19,6 +19,14 @@
 	};
 	let isCreating = false;
 
+	const resetInput = () => {
+		newAtom = {
+			title: "",
+			time: 60
+		};
+		isCreating = false;
+	};
+
 	const syncAtoms = async () => {
 		atoms = await trpc.atom.mine.query();
 	};
@@ -35,11 +43,7 @@
 		await trpc.atom.create.mutate(newAtom);
 		await syncAtoms();
 
-		newAtom = {
-			title: "",
-			time: 60
-		};
-		isCreating = false;
+		resetInput();
 	};
 
 	const deleteAtom = async (id: number) => {
@@ -67,6 +71,9 @@
 	{/each}
 	{#if isCreating}
 		<form class="flex gap-2" on:submit={createAtom}>
+			<button class="p-2 bg-base hover:text-sapphire rounded">
+				<Icon class="w-5" src={PaperAirplane} solid />
+			</button>
 			<input
 				class="w-full"
 				placeholder="Title"
@@ -85,8 +92,11 @@
 				/>
 				<span class="absolute right-2 top-2 text-overlay0">min</span>
 			</div>
-			<button class="p-2 bg-base hover:text-sapphire rounded">
-				<Icon class="w-5" src={PaperAirplane} solid />
+			<button
+				class="p-2 bg-base hover:text-maroon rounded"
+				on:click={resetInput}
+			>
+				<Icon class="w-5" src={Backspace} solid />
 			</button>
 		</form>
 	{:else}
