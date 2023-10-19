@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { v4 as uuid } from "uuid";
 import z from "zod";
 
 import { COOKIE_NAME } from "../lib/constants";
@@ -34,10 +35,10 @@ export const userRouter = router({
 
 			const hash = await Bun.password.hash(input.password);
 
-			await db.query("INSERT INTO users (email, password) VALUES ($1, $2);", [
-				input.email,
-				hash
-			]);
+			await db.query(
+				"INSERT INTO users (id, email, password) VALUES ($1, $2, $3);",
+				[uuid(), input.email, hash]
+			);
 		}),
 	signIn: procedure
 		.input(z.object({ email: z.string(), password: z.string() }))
@@ -86,5 +87,24 @@ export const userRouter = router({
 		]);
 
 		return !user.dark_mode;
+	}),
+	update: procedure.mutation(async ({ ctx }) => {
+		const user = await getUser(ctx);
+
+		const res = await db.query(
+			"SELECT updated_on = CURRENT_DATE as updated_today FROM users WHERE id = $1;",
+			[user.id]
+		);
+
+		if (!res.rows[0].updated_today)
+			await db.query(
+				"UPDATE atoms SET time_current = time_initial WHERE user_id = $1;",
+				[user.id]
+			);
+
+		await db.query(
+			"UPDATE users SET updated_on = CURRENT_DATE WHERE id = $1;",
+			[user.id]
+		);
 	})
 });

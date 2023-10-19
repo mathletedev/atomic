@@ -34,6 +34,7 @@
 	onMount(async () => {
 		if (!data.user) window.location.assign("/");
 
+		await trpc.user.update.mutate();
 		await syncAtoms();
 
 		if (Notification.permission !== "granted") Notification.requestPermission();
@@ -54,11 +55,6 @@
 	};
 
 	setContext("atom", { createAtom, deleteAtom });
-
-	const refresh = async () => {
-		await trpc.atom.refresh.mutate();
-		await syncAtoms();
-	};
 </script>
 
 <Navbar user={data.user} />
@@ -109,5 +105,4 @@
 			<Icon class="w-5" src={Plus} solid />New Atom
 		</button>
 	{/if}
-	<button on:click={refresh}>Refresh</button>
 </div>

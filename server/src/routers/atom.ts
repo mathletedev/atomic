@@ -1,10 +1,11 @@
 import { TRPCError } from "@trpc/server";
+import { v4 as uuid } from "uuid";
 import { z } from "zod";
 
 import db from "../lib/db";
 import { procedure, router } from "../lib/trpc";
 import { getUser } from "../lib/utils";
-import { Atom } from "../models/atom";
+import { Atom } from "../models";
 
 export const atomRouter = router({
 	mine: procedure.query(async ({ ctx }) => {
@@ -26,12 +27,12 @@ export const atomRouter = router({
 			const user = await getUser(ctx);
 
 			await db.query(
-				"INSERT INTO atoms (user_id, title, time_initial, time_current) VALUES ($1, $2, $3 * interval '1 min', $3 * interval '1 min');",
-				[user.id, input.title, input.time]
+				"INSERT INTO atoms (id, user_id, title, time_initial, time_current) VALUES ($1, $2, $3, $4 * interval '1 min', $4 * interval '1 min');",
+				[uuid(), user.id, input.title, input.time]
 			);
 		}),
 	delete: procedure
-		.input(z.object({ id: z.number() }))
+		.input(z.object({ id: z.string() }))
 		.mutation(async ({ input, ctx }) => {
 			const user = await getUser(ctx);
 
@@ -50,7 +51,7 @@ export const atomRouter = router({
 			await db.query("DELETE FROM atoms WHERE id = $1", [input.id]);
 		}),
 	updateTime: procedure
-		.input(z.object({ id: z.number(), time: z.number() }))
+		.input(z.object({ id: z.string(), time: z.number() }))
 		.mutation(async ({ input, ctx }) => {
 			const user = await getUser(ctx);
 
@@ -70,13 +71,5 @@ export const atomRouter = router({
 				"UPDATE atoms SET time_current = $1 * interval '1 sec' WHERE id = $2;",
 				[input.time, input.id]
 			);
-		}),
-	refresh: procedure.mutation(async ({ ctx }) => {
-		const user = await getUser(ctx);
-
-		await db.query(
-			"UPDATE atoms SET time_current = time_initial WHERE user_id = $1;",
-			[user.id]
-		);
-	})
+		})
 });
