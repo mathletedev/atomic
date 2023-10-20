@@ -59,7 +59,11 @@
 	>
 		<Icon
 			class={`w-6 h-6 p-1 rounded-full bg-surface0 ${
-				time === 0 ? "text-surface2" : "hover:text-green"
+				time === 0
+					? "text-surface2"
+					: running
+					? "hover:text-maroon"
+					: "hover:text-green"
 			}`}
 			src={running ? Pause : Play}
 			solid
