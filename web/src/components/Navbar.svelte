@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Home, Icon, Moon, Sun } from "svelte-hero-icons";
+	import { Calendar, Home, Icon, Moon, Sun } from "svelte-hero-icons";
 
 	import { trpc } from "$lib/trpc";
 	import type { User } from "$lib/types";
@@ -26,6 +26,9 @@
 	{#if user}
 		<a class="icon-button hover:text-sapphire" href="/home">
 			<Icon class="w-6" src={Home} solid />
+		</a>
+		<a class="icon-button hover:text-sapphire" href="/table">
+			<Icon class="w-6" src={Calendar} solid />
 		</a>
 	{/if}
 	<a class="text-2xl font-bold" href="/">

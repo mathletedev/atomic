@@ -36,17 +36,15 @@ export const atomRouter = router({
 		.mutation(async ({ input, ctx }) => {
 			const user = await getUser(ctx);
 
-			const res = await db.query("SELECT user_id FROM atoms WHERE id = $1;", [
-				input.id
-			]);
+			const res = await db.query(
+				"SELECT title FROM atoms WHERE id = $1 AND user_id = $2;",
+				[input.id, user.id]
+			);
 
 			if (!res.rowCount)
 				throw new TRPCError({
 					code: "NOT_FOUND"
 				});
-
-			if (user.id != res.rows[0].user_id)
-				throw new TRPCError({ code: "UNAUTHORIZED" });
 
 			await db.query("DELETE FROM atoms WHERE id = $1", [input.id]);
 		}),

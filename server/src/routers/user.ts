@@ -96,11 +96,27 @@ export const userRouter = router({
 			[user.id]
 		);
 
-		if (!res.rows[0].updated_today)
+		if (!res.rows[0].updated_today) {
+			await db.query(
+				`
+				INSERT INTO
+					histories (id, user_id, date, completed, total)
+				VALUES
+					(
+						$1,
+						$2,
+						(SELECT updated_on FROM users WHERE id = $2),
+						(SELECT COUNT(*) FROM atoms WHERE user_id = $2 AND time_current = interval '0 sec'),
+						(SELECT COUNT(*) FROM atoms WHERE user_id = $2)
+					);`,
+				[uuid(), user.id]
+			);
+
 			await db.query(
 				"UPDATE atoms SET time_current = time_initial WHERE user_id = $1;",
 				[user.id]
 			);
+		}
 
 		await db.query(
 			"UPDATE users SET updated_on = CURRENT_DATE WHERE id = $1;",

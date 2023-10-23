@@ -12,4 +12,12 @@ CREATE TABLE atoms (
 	title TEXT NOT NULL,
 	time_initial INTERVAL NOT NULL,
 	time_current INTERVAL NOT NULL
-)
+);
+
+CREATE TABLE histories (
+	id UUID PRIMARY KEY,
+	user_id UUID NOT NULL,
+	date DATE NOT NULL,
+	completed INTEGER NOT NULL,
+	total INTEGER NOT NULL
+);

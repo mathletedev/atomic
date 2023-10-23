@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 
-import { User } from "../models/user";
+import { User } from "../models";
 import { ExpressRequest } from "./context";
 import db from "./db";
 

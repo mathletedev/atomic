@@ -47,7 +47,7 @@
 		resetInput();
 	};
 
-	const deleteAtom = async (id: number) => {
+	const deleteAtom = async (id: string) => {
 		if (!confirm("Are you sure you want to delete this Atom?")) return;
 
 		await trpc.atom.delete.mutate({ id });
