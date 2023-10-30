@@ -58,7 +58,7 @@
 </script>
 
 <Navbar user={data.user} />
-<div class="mx-auto px-16 py-4 max-w-[1024px]">
+<div class="mx-auto px-16 py-8 max-w-[1024px]">
 	<h1 class="mb-2 text-xl font-bold text-mauve">My Atoms</h1>
 	{#each atoms as atom}
 		<div class="mb-2">

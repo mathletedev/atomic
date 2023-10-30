@@ -92,11 +92,17 @@ export const userRouter = router({
 		const user = await getUser(ctx);
 
 		const res = await db.query(
-			"SELECT updated_on = CURRENT_DATE as updated_today FROM users WHERE id = $1;",
+			`
+			SELECT
+				updated_on = CURRENT_DATE as updated_today,
+				(SELECT COUNT(*) FROM atoms WHERE user_id = $1) as total
+			FROM
+				users
+			WHERE id = $1;`,
 			[user.id]
 		);
 
-		if (!res.rows[0].updated_today) {
+		if (!res.rows[0].updated_today && res.rows[0].total > 0) {
 			await db.query(
 				`
 				INSERT INTO
